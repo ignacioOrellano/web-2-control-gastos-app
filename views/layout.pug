@@ -3,12 +3,17 @@ html
   head
     meta(charset='UTF-8')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='/styles.css')
     block metadata
 
   body
     nav
-      a(href='/') Home
-      a(href='/gastos') Gastos
-      a(href='/categorias') Categorías
+      ul
+        li
+          a(href='/') Home
+        li
+          a(href='/gastos') Gastos
+        li
+          a(href='/categorias') Categorías
     main
       block content
