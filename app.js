@@ -14,6 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 // MOTOR DE PLANTILLAS
 app.set('view engine', 'pug');
 app.set('views', './views');
+// BOOTSTRAP
+app.use('/dist', express.static('node_modules/bootstrap/dist'))
 
 // RUTAS
 app.get('/', (req, res) => {

@@ -12,6 +12,7 @@
   "author": "Ignacio",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^5.3.8",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "pug": "^3.0.4"
