@@ -6,3 +6,15 @@ block metadata
 
 block content
   h1 Mis Gastos
+  table
+    thead.azul
+      tr
+        td Titulo
+        td Monto
+        td Descripcion
+    tbody
+      each g in gastos
+        tr
+          td #{g.titulo}
+          td #{g.monto}
+          td #{g.descripcion}

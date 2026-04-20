@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "userId": 1,
+    "monto": 45.50,
+    "titulo": "Almuerzo",
+    "descripcion": "Almuerzo en restaurante con colegas",
+    "categoriaId": 2
+  },
+  {
+    "id": 2,
+    "userId": 1,
+    "monto": 120.00,
+    "titulo": "Gasolina",
+    "descripcion": "Carga de combustible",
+    "categoriaId": 3
+  },
+  {
+    "id": 3,
+    "userId": 2,
+    "monto": 15.99,
+    "titulo": "Café",
+    "descripcion": "Café en cafetería",
+    "categoriaId": 2
+  },
+  {
+    "id": 4,
+    "userId": 2,
+    "monto": 250.00,
+    "titulo": "Útiles escolares",
+    "descripcion": "Compra de libros y cuadernos",
+    "categoriaId": 4
+  },
+  {
+    "id": 5,
+    "userId": 1,
+    "monto": 89.75,
+    "titulo": "Cine",
+    "descripcion": "Entrada al cine para dos personas",
+    "categoriaId": 5
+  }
+]

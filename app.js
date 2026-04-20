@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+import gastosRouter from './routes/gastos.js';
 
 // CONSTANTES
 const PORT = process.env.PORT;
@@ -20,9 +21,7 @@ app.get('/', (req, res) => {
   res.render('index');
 })
 
-app.get('/gastos', (req, res) => {
-  res.render('gastos');
-});
+app.use('/gastos', gastosRouter);
 
 app.get('/categorias', (req, res) => {
   res.render('categorias');
