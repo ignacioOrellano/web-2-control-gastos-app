@@ -6,5 +6,11 @@ block metadata
 
 block content
   div(style="padding: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px")
-    h1 404
-    p No se encontro el contenido que buscabas.
+    if code
+      h1 #{code}
+    else
+      h1 404
+    if msg
+      p #{msg}
+    else
+      p No se encontro el contenido que buscabas.
