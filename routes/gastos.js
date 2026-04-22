@@ -49,7 +49,63 @@ router.get('/user/:id', async (req, res) => {
 })
 
 // /gastos/:id
+
 // /gastos/nuevo
+router.get('/nuevo', (req, res)=> {
+  res.render('gastos/nuevo')
+});
+
+router.post('/nuevo', async (req, res) => {
+  const body = req.body
+  const { titulo, descripcion, categoriaId } = body;
+  const monto = Number(body.monto);
+
+
+  let flagError = false;
+  let msgError = '';
+  
+  if(!monto || !titulo){
+    msgError = "No completo bien el formulario"
+    flagError = true
+  }
+
+  if(isNaN(monto)){
+    msgError += "El monto debe ser un numero"
+    flagError = true
+  }
+  if(monto < 0){
+    msgError += "El monto debe ser mayor a cero"
+    flagError = true
+  }
+  if(titulo.length === 0){
+    msgError += "Debe completar titulo"
+    flagError = true
+  }
+
+  if(flagError){
+    res.status(400).render('gastos/error', { msg: msgError })
+    return
+  }
+
+  const gastosJSON = await fs.readFile(path.join(process.cwd(), 'db', 'gastos.json'), 'utf-8');
+  const gastos = JSON.parse(gastosJSON);
+
+  const nuevoGasto = {
+    id: gastos.length + 1,
+    monto: monto,
+    titulo: titulo,
+    descripcion: descripcion ? descripcion : '',
+    categoriaId: 1,
+    userId: 1,
+  }
+
+  // guardar en bd
+  gastos.push(nuevoGasto)
+  await fs.writeFile(path.join(process.cwd(), 'db', 'gastos.json'), JSON.stringify(gastos, null, 2), 'utf-8')
+
+  res.redirect('/gastos/')
+})
+
 // /gastos/editar/:id
 
 

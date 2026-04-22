@@ -7,6 +7,10 @@ block metadata
 block content
   h1 Mis Gastos
 
+  ul
+    li
+      a(href='/gastos/nuevo') Agregar gasto
+
   form(action="/gastos/user", method="get", name="busquedauser")
     label(for="userid") Usuario id
     input(type="number" name="userid" id="userid")
