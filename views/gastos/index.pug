@@ -6,6 +6,12 @@ block metadata
 
 block content
   h1 Mis Gastos
+
+  form(action="/gastos/user", method="get", name="busquedauser")
+    label(for="userid") Usuario id
+    input(type="number" name="userid" id="userid")
+    button(type="submit") Buscar
+
   table
     thead.azul
       tr
@@ -18,3 +24,5 @@ block content
           td #{g.titulo}
           td #{g.monto}
           td #{g.descripcion}
+
+    script(src="/gastos/script.js")
