@@ -1,6 +1,13 @@
 import { Router } from "express"
 import path from 'path';
 import fs from 'fs/promises';
+import { 
+  validarGasto,
+  saveOneGasto,
+  getAllGastos,
+  getAllGastosByUserId,
+  getNextGastoId
+} from '../models/gasto.js'
 
 // /gastos
 const router = Router()
@@ -8,8 +15,7 @@ const router = Router()
 // /gastos/ 
 router.get('/', async (req, res) => {
   try {
-    const gastosJSON = await fs.readFile(path.join(process.cwd(), 'db', 'gastos.json'), 'utf-8');
-    const gastos = JSON.parse(gastosJSON);
+    const gastos = await getAllGastos();
     res.render('gastos/index', { gastos: gastos });
   } catch (error) {
     console.error('Error al leer el archivo de gastos:', error);
@@ -26,14 +32,11 @@ router.get('/user/:id', async (req, res) => {
     const usuarioEncontrado = usuarios.find(u => u.id === usuarioId);
 
     if(!usuarioEncontrado){
-      res.status(404).render('gastos/error');
+      res.status(404).render('gastos/error', { msg: 'Usuario no encontrado' });
       return;
     }
 
-    const gastosJSON = await fs.readFile(path.join(process.cwd(), 'db', 'gastos.json'), 'utf-8');
-    const gastos = JSON.parse(gastosJSON);
-
-    const gastosFiltrados = gastos.filter(g => g.userId === usuarioEncontrado.id);
+    const gastosFiltrados = await getAllGastosByUserId(usuarioEncontrado.id);
 
     res.render('gastos/byuser', { 
       gastos: gastosFiltrados,
@@ -60,38 +63,32 @@ router.post('/nuevo', async (req, res) => {
   const { titulo, descripcion, categoriaId } = body;
   const monto = Number(body.monto);
 
+  const validacion = validarGasto({
+    monto: monto,
+    titulo: titulo,
+    descripcion: descripcion,
+  })
 
-  let flagError = false;
-  let msgError = '';
-  
-  if(!monto || !titulo){
-    msgError = "No completo bien el formulario"
-    flagError = true
-  }
-
-  if(isNaN(monto)){
-    msgError += "El monto debe ser un numero"
-    flagError = true
-  }
-  if(monto < 0){
-    msgError += "El monto debe ser mayor a cero"
-    flagError = true
-  }
-  if(titulo.length === 0){
-    msgError += "Debe completar titulo"
-    flagError = true
-  }
-
-  if(flagError){
-    res.status(400).render('gastos/error', { msg: msgError })
+  if(validacion.success === false){
+    const montoError = validacion.errors.monto;
+    const tituloError = validacion.errors.titulo;
+    let msg = '';
+    if(montoError){
+      for(const e of montoError){
+        msg += ' ' + e
+      }
+    }
+    if(tituloError){
+      for(const e of tituloError){
+        msg += ' ' + e
+      }
+    }
+    res.status(400).render('gastos/error', { msg: msg })
     return
   }
 
-  const gastosJSON = await fs.readFile(path.join(process.cwd(), 'db', 'gastos.json'), 'utf-8');
-  const gastos = JSON.parse(gastosJSON);
-
   const nuevoGasto = {
-    id: gastos.length + 1,
+    id: await getNextGastoId(),
     monto: monto,
     titulo: titulo,
     descripcion: descripcion ? descripcion : '',
@@ -99,9 +96,7 @@ router.post('/nuevo', async (req, res) => {
     userId: 1,
   }
 
-  // guardar en bd
-  gastos.push(nuevoGasto)
-  await fs.writeFile(path.join(process.cwd(), 'db', 'gastos.json'), JSON.stringify(gastos, null, 2), 'utf-8')
+  await saveOneGasto(nuevoGasto)
 
   res.redirect('/gastos/')
 })
