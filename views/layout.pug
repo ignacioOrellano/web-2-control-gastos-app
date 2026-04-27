@@ -1,3 +1,5 @@
+include mixins/alert
+
 doctype html
 html
   head
@@ -16,5 +18,7 @@ html
         li
           a(href='/categorias') Categorías
     main
+      +alert(alert)
+
       div(style="padding: 20px")
         block content

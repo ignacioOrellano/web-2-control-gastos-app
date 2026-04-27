@@ -9,10 +9,10 @@ import {
   getOneUsuarioById
 } from "../models/usuario.js";
 
-export async function getGastos(req, res) {
+export async function getGastos(req, res, options = {}) {
   try {
     const gastos = await getAllGastos();
-    res.render('gastos/index', { gastos: gastos });
+    res.render('gastos/index', { gastos: gastos, ...options });
   } catch (error) {
     console.error('Error al leer el archivo de gastos:', error);
     res.status(500).send('Error al cargar los gastos');
@@ -74,7 +74,7 @@ export async function postNuevoUser(req, res) {
         msg += ' ' + e
       }
     }
-    res.status(400).render('gastos/error', { msg: msg })
+    res.status(400).render('gastos/error', { msg: msg, alert: { status: 'error', text: "No se pudo crear el gasto!" } })
     return
   }
 
@@ -89,5 +89,12 @@ export async function postNuevoUser(req, res) {
 
   await saveOneGasto(nuevoGasto)
 
-  res.redirect('/gastos/')
+  let options = {
+    alert: {
+      status: 'success',
+      text: 'Gasto creado exitosamente!'
+    }
+  }
+
+  await getGastos(req, res, options);
 }
