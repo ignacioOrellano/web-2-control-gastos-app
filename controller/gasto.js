@@ -2,8 +2,10 @@ import {
   getAllGastos,
   getAllGastosByUserId,
   saveOneGasto,
-  validarGasto
 } from "../models/gasto.js";
+import {
+  validarGasto,
+} from "../helpers/validaciones.js";
 import { 
   getOneUsuarioById
 } from "../models/usuario.js";
