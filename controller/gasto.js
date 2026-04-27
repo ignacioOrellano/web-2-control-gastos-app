@@ -1,19 +1,15 @@
-import { Router } from "express"
-import path from 'path';
-import fs from 'fs/promises';
-import { 
-  validarGasto,
-  saveOneGasto,
+import {
   getAllGastos,
   getAllGastosByUserId,
-  getNextGastoId
-} from '../models/gasto.js'
+  getNextGastoId,
+  saveOneGasto,
+  validarGasto
+} from "../models/gasto.js";
+import { 
+  getOneUsuarioById
+} from "../models/usuario.js";
 
-// /gastos
-const router = Router()
-
-// /gastos/ 
-router.get('/', async (req, res) => {
+export async function getGastos(req, res) {
   try {
     const gastos = await getAllGastos();
     res.render('gastos/index', { gastos: gastos });
@@ -21,15 +17,12 @@ router.get('/', async (req, res) => {
     console.error('Error al leer el archivo de gastos:', error);
     res.status(500).send('Error al cargar los gastos');
   }
-})
+}
 
-// /gastos/user/:id
-router.get('/user/:id', async (req, res) => {
+export async function getGastosByUserId(req, res) {
   const usuarioId = Number(req.params.id)
   try {
-    const usuariosJSON = await fs.readFile(path.join(process.cwd(), 'db', 'usuarios.json'), 'utf-8');
-    const usuarios = JSON.parse(usuariosJSON);
-    const usuarioEncontrado = usuarios.find(u => u.id === usuarioId);
+    const usuarioEncontrado = await getOneUsuarioById(usuarioId);
 
     if(!usuarioEncontrado){
       res.status(404).render('gastos/error', { msg: 'Usuario no encontrado' });
@@ -49,16 +42,14 @@ router.get('/user/:id', async (req, res) => {
     console.error('Error al leer el archivo de gastos:', error);
     res.status(500).send('Error al cargar los gastos');
   }
-})
+}
 
-// /gastos/:id
 
-// /gastos/nuevo
-router.get('/nuevo', (req, res)=> {
-  res.render('gastos/nuevo')
-});
+export function getNuevoUser(req, res) {
+  res.render('gastos/nuevo');
+}
 
-router.post('/nuevo', async (req, res) => {
+export async function postNuevoUser(req, res) {
   const body = req.body
   const { titulo, descripcion, categoriaId } = body;
   const monto = Number(body.monto);
@@ -99,9 +90,4 @@ router.post('/nuevo', async (req, res) => {
   await saveOneGasto(nuevoGasto)
 
   res.redirect('/gastos/')
-})
-
-// /gastos/editar/:id
-
-
-export default router;
+}

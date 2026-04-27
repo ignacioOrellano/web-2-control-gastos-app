@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
-import gastosRouter from './routes/gastos.js';
+import gastosRouter from './routes/gasto.js';
 
 // CONSTANTES
 const PORT = process.env.PORT;
