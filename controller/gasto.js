@@ -1,7 +1,6 @@
 import {
   getAllGastos,
   getAllGastosByUserId,
-  getNextGastoId,
   saveOneGasto,
   validarGasto
 } from "../models/gasto.js";
@@ -44,12 +43,11 @@ export async function getGastosByUserId(req, res) {
   }
 }
 
-
-export function getNuevoUser(req, res) {
+export function getNuevoGasto(req, res) {
   res.render('gastos/nuevo');
 }
 
-export async function postNuevoUser(req, res) {
+export async function postNuevoGasto(req, res) {
   const body = req.body
   const { titulo, descripcion, categoriaId } = body;
   const monto = Number(body.monto);
@@ -79,7 +77,6 @@ export async function postNuevoUser(req, res) {
   }
 
   const nuevoGasto = {
-    id: await getNextGastoId(),
     monto: monto,
     titulo: titulo,
     descripcion: descripcion ? descripcion : '',

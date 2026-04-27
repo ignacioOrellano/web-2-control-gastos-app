@@ -2,8 +2,8 @@ import { Router } from "express"
 import { 
   getGastos,
   getGastosByUserId,
-  getNuevoUser,
-  postNuevoUser
+  getNuevoGasto,
+  postNuevoGasto
 } from '../controller/gasto.js'
 
 // /gastos
@@ -18,9 +18,9 @@ router.get('/user/:id', getGastosByUserId)
 // /gastos/:id
 
 // /gastos/nuevo
-router.get('/nuevo', getNuevoUser);
+router.get('/nuevo', getNuevoGasto);
 
-router.post('/nuevo', postNuevoUser);
+router.post('/nuevo', postNuevoGasto);
 
 // /gastos/editar/:id
 
