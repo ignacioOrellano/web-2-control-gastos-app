@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='/styles.css')
+    title Iniciar sesion
+
+  body
+    div.container
+      div.form-wrapper
+        h1 Iniciar sesion
+        form(method='POST', action='/auth/signup')
+          div.form-group
+          
+          div.form-group
+            label(for='email') Email
+            input(type='email', id='email', name='email', required)
+          
+          div.form-group
+            label(for='password') Contraseña
+            input(type='password', id='password', name='password', required)
+          
+          button(type='submit') Registrarse
+          
+          p.login-link
+            | ¿No tienes cuenta? 
+            a(href='/auth/singup') Registrate aquí

@@ -28,6 +28,14 @@ nav ul li a {
   text-decoration: none;
 }
 
+nav ul li a.active {
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  background-color: #2556f7;
+}
+
 nav ul li a:hover {
   background-color: #111;
 }

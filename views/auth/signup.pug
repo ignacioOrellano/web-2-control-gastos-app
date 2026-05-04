@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='/styles.css')
+    title Registrarse
+
+  body
+    div.container
+      div.form-wrapper
+        h1 Registrarse
+        form(method='POST', action='/auth/signup')
+          div.form-group
+            label(for='nombre') Nombre
+            input(type='text', id='nombre', name='nombre', required)
+          
+          div.form-group
+            label(for='email') Email
+            input(type='email', id='email', name='email', required)
+          
+          div.form-group
+            label(for='password') Contraseña
+            input(type='password', id='password', name='password', required)
+          
+          div.form-group
+            label(for='confirmPassword') Confirmar Contraseña
+            input(type='password', id='confirmPassword', name='confirmPassword', required)
+          
+          button(type='submit') Registrarse
+          
+          p.login-link
+            | ¿Ya tienes cuenta? 
+            a(href='/auth/login') Inicia sesión aquí
+
