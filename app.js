@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import express from 'express';
 import gastosRouter from './routes/gasto.js';
+import authRouter from './routes/auth.js';
+import { auth } from './middleware/auth.js';
 
 // CONSTANTES
 const PORT = process.env.PORT;
@@ -17,9 +19,12 @@ app.set('view engine', 'pug');
 app.set('views', './views');
 
 // RUTAS
+app.use(auth);
 app.get('/', (req, res) => {
   res.render('index');
 })
+
+app.use('/auth', authRouter);
 
 app.use('/gastos', gastosRouter);
 
