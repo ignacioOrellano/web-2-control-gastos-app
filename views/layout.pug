@@ -1,4 +1,5 @@
 include mixins/alert
+include mixins/nav
 
 doctype html
 html
@@ -9,14 +10,7 @@ html
     block metadata
 
   body
-    nav
-      ul
-        li
-          a(href='/') Home
-        li
-          a(href='/gastos') Gastos
-        li
-          a(href='/categorias') Categorías
+    +nav
     main
       +alert(alert)
 
