@@ -6,10 +6,6 @@ mixin item(path, name, active)
       a(href=path) #{name}
 
 mixin nav
-
-  if currentPath
-    h1 current path: #{currentPath}
-
   nav
     ul
       +item('/', 'Home', currentPath == '/')
