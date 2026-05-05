@@ -4,6 +4,7 @@ html
     meta(charset='UTF-8')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     link(rel='stylesheet', href='/styles.css')
+    link(rel='stylesheet', href='/auth.css')
     title Registrarse
 
   body
@@ -27,9 +28,10 @@ html
             label(for='confirmPassword') Confirmar Contraseña
             input(type='password', id='confirmPassword', name='confirmPassword', required)
           
-          button(type='submit') Registrarse
+          div.form-group.center
+            button(type='submit') Registrarse
           
-          p.login-link
+          p.redirect-link
             | ¿Ya tienes cuenta? 
             a(href='/auth/login') Inicia sesión aquí
 
