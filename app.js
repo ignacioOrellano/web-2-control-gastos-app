@@ -3,6 +3,8 @@ import express from 'express';
 import gastosRouter from './routes/gasto.js';
 import authRouter from './routes/auth.js';
 import { auth } from './middleware/auth.js';
+import sequelize from './models/config.js';
+import './models/sync.js'
 
 // CONSTANTES
 const PORT = process.env.PORT;
@@ -32,11 +34,19 @@ app.get('/categorias', (req, res) => {
   res.render('categorias');
 });
 
-// SERVIDOR
-app.listen(PORT, (err) => {
-  if(err) {
-    console.error('Error al iniciar el servidor:', err);
-    return;
-  }
-  console.log(`Servidor escuchando en el puerto ${PORT}`);
-});
+
+// CONEXION A BD
+sequelize.sync({ alter: true, force: true })
+  .then(()=>{
+    // SERVIDOR
+    app.listen(PORT, (err) => {
+      if(err) {
+        console.error('Error al iniciar el servidor:', err);
+        return;
+      }
+      console.log(`Servidor escuchando en el puerto ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Error sincronizando con bd:', err)
+  })
