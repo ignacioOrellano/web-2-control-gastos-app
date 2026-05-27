@@ -17,7 +17,11 @@ Expense.init(
     title: {
       type: DataTypes.STRING,
       allowNull: false,
-    },    
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
   },
   {
     sequelize, // necesario para conectarse a la bd

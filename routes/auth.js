@@ -9,7 +9,7 @@ auth.post('/login', (req, res) => {
   // TODO: Aquí iría la lógica de autenticación
 
   // si esta todo ok => luego de redirecciona al home
-  res.redirect('/gastos')
+  res.redirect('/expense')
 })
 
 auth.get('/signup', (req, res) => {
@@ -20,7 +20,7 @@ auth.post('/signup', (req, res) => {
   // TODO: Aquí iría la lógica de registro de usuario
   
   // si esta todo ok => luego de redirecciona al home
-  res.redirect('/gastos')
+  res.redirect('/expense')
 })
 
 export default auth

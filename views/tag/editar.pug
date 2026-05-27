@@ -1,0 +1,22 @@
+extends ../layout.pug
+
+block metadata
+  title Editar Categoria
+  meta(name='description', content='Editar categoria')
+
+block content
+  h1 Editar categoria ##{categoria.id}
+
+  form(action=`/tag/editar/${categoria.id}`, method='post', novalidate)
+    div
+      label(for='title') Titulo
+      input(type='text', name='title', id='title', required, maxlength='50', value=values && values.title ? values.title : categoria.title)
+
+    div
+      label(for='color') Color
+      input(type='color', name='color', id='color', required, value=values && values.color ? values.color : categoria.color)
+
+    div
+      button(type='submit') Guardar cambios
+      |  
+      a(href='/tag') Cancelar

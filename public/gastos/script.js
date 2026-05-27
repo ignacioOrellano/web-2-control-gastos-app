@@ -9,6 +9,6 @@ function mandarFormulario(event){
   const usuarioID = input.value
   
   if(usuarioID){
-    window.location.href = `/gastos/user/${usuarioID}`
+    window.location.href = `/expense/user/${usuarioID}`
   }
 }

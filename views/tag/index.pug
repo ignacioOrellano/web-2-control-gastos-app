@@ -1,0 +1,40 @@
+extends ../layout.pug
+include ../mixins/tag
+
+block metadata
+  title Categorias
+  meta(name='description', content='Pagina de categorias')
+
+block content
+  h1 Mis Categorias
+
+  if user
+    p Usuario: #{user.nombre} (ID #{user.id})
+
+  p
+    a(href='/tag/nuevo') Agregar categoria
+
+  if !categorias || categorias.length === 0
+    p Todavia no cargaste categorias.
+  else
+    table
+      thead.azul
+        tr
+          td Id
+          td Titulo
+          td Color
+          td Fecha
+          td Acciones
+      tbody
+        each c in categorias
+          tr
+            td #{c.id}
+            td #{c.title}
+            td
+              +tag(c.title, c.color)
+            td #{c.createdAt ? c.createdAt.toLocaleString() : '-'}
+            td
+              div(style='display: flex; justify-content: center; align-items: center; gap: 10px')
+                a(href=`/tag/editar/${c.id}`) Editar
+                form(action=`/tag/eliminar/${c.id}`, method='post', style='display: inline')
+                  button(type='submit', style='width: auto; padding: 6px 10px; margin: 0; font-size: 14px') Eliminar

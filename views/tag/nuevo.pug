@@ -1,0 +1,22 @@
+extends ../layout.pug
+
+block metadata
+  title Nueva Categoria
+  meta(name='description', content='Nueva categoria')
+
+block content
+  h1 Nueva categoria
+
+  form(action='/tag/nuevo', method='post', novalidate)
+    div
+      label(for='title') Titulo
+      input(type='text', name='title', id='title', required, maxlength='50', value=values && values.title ? values.title : '')
+
+    div
+      label(for='color') Color
+      input(type='color', name='color', id='color', required, value=values && values.color ? values.color : '#6b7280')
+
+    div
+      button(type='submit') Guardar categoria
+      |  
+      a(href='/tag') Volver

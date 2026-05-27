@@ -1,0 +1,32 @@
+extends ../layout.pug
+
+block metadata
+  title Editar gasto
+  meta(name='description', content='Editar gasto')
+
+block content
+  h1 Editar gasto ##{gasto.id}
+
+  form(action=`/expense/editar/${gasto.id}`, method='post', novalidate)
+    div
+      label(for='monto') Monto
+      input(type='number', name='monto', id='monto', min='0.01', step='0.01', required, value=values && values.monto ? values.monto : gasto.amount)
+
+    div
+      label(for='titulo') Titulo
+      input(type='text', name='titulo', id='titulo', required, maxlength='50', value=values && values.titulo ? values.titulo : gasto.title)
+
+    div
+      label(for='descripcion') Descripcion
+      textarea(name='descripcion', id='descripcion', rows='3')= values && values.descripcion ? values.descripcion : (gasto.description || '')
+
+    div
+      label(for='categoriaId') Categoria
+      select(name='categoriaId', id='categoriaId', required)
+        each c in categorias
+          option(value=c.id, selected=Number(values && values.categoriaId ? values.categoriaId : gasto.tagId) === c.id) #{c.title}
+
+    div
+      button(type='submit') Guardar cambios
+      |  
+      a(href='/expense') Cancelar

@@ -1,0 +1,31 @@
+extends ../layout.pug
+
+block metadata
+  title Gastos
+  meta(name='description', content='Página de gastos')
+
+block content
+  h1 Gastos del usuario #{user.id}: #{user.nombre}
+  if !gastos || gastos.length === 0
+    p No hay gastos para mostrar.
+  else
+    table
+      thead.azul
+        tr
+          td Titulo
+          td Monto
+          td Descripcion
+          td Categoria
+          td Acciones
+      tbody
+        each g in gastos
+          tr
+            td #{g.title}
+            td #{g.amount}
+            td #{g.description || '-'}
+            td #{g.Tag ? g.Tag.title : 'Sin categoria'}
+            td
+              a(href=`/expense/editar/${g.id}`) Editar
+              |  
+              form(action=`/expense/eliminar/${g.id}`, method='post', style='display: inline')
+                button(type='submit') Eliminar

@@ -9,5 +9,10 @@ mixin nav
   nav
     ul
       +item('/', 'Home', currentPath == '/')
-      +item('/gastos', 'Gastos', currentPath.startsWith('/gastos'))
-      +item('/categorias', 'Categorías', currentPath.startsWith('/categorias'))
+      +item('/expense', 'Gastos', currentPath.startsWith('/expense'))
+      +item('/tag', 'Categorías', currentPath.startsWith('/tag'))
+      if currentUser
+        li.nav-user
+          div.nav-user-profile
+            span #{currentUser.firstName} #{currentUser.lastName}
+            img(src='/icons/user-svgrepo-com.svg', alt='Usuario', width='22', height='22')

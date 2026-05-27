@@ -1,0 +1,46 @@
+extends ../layout.pug
+include ../mixins/tag
+
+block metadata
+  title Gastos
+  meta(name='description', content='Página de gastos')
+
+block content
+  h1 Mis Gastos
+  if user
+    p Usuario: #{user.nombre} (ID #{user.id})
+
+  p
+    a(href='/expense/nuevo') Agregar gasto
+
+  if !gastos || gastos.length === 0
+    p Todavia no cargaste gastos.
+  else
+    table
+      thead.azul
+        tr
+          td Id
+          td Titulo
+          td Monto
+          td Categoria
+          td Fecha
+          td Acciones
+      tbody
+        each g in gastos
+          tr
+            td #{g.id}
+            td #{g.title}
+            td #{g.amount}
+            td 
+              if g.Tag
+                +tag(g.Tag.title, g.Tag.color)
+              else
+                span Sin Categoria
+            td #{g.createdAt ? g.createdAt.toLocaleString() : '-'}
+            td
+              div(style='display: flex; justify-content: center; align-items: center; gap: 10px')
+                a(href=`/expense/editar/${g.id}`, style='display: inline')
+                  img(src='/icons/edit-svgrepo-com.svg', alt='Editar', width='25', height='25')
+                |
+                form(action=`/expense/eliminar/${g.id}`, method='post', style='display: inline')
+                  img(src='/icons/delete-svgrepo-com.svg', alt='Editar', width='25', height='25')

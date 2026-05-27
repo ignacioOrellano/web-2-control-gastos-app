@@ -29,8 +29,39 @@ nav ul {
   padding: 0;
 }
 
+nav ul::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
 nav ul li {
   float: left;
+}
+
+nav ul li.nav-user {
+  float: right;
+
+}
+
+nav ul li.nav-user .nav-user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  padding: 12px 16px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+  }
+}
+
+nav ul li.nav-user .nav-user-profile img {
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 2px;
 }
 
 nav ul li a {
