@@ -1,26 +1,13 @@
 import { Router } from "express"
+import { login, loginForm, signup, signupForm } from "../controller/auth.js"
 
 const auth = Router()
-auth.get('/login', (req, res) => {
-  res.render('auth/login')
-})
+auth.get('/login', loginForm)
 
-auth.post('/login', (req, res) => {
-  // TODO: Aquí iría la lógica de autenticación
+auth.post('/login', login)
 
-  // si esta todo ok => luego de redirecciona al home
-  res.redirect('/expense')
-})
+auth.get('/signup', signupForm)
 
-auth.get('/signup', (req, res) => {
-  res.render('auth/signup')
-})
-
-auth.post('/signup', (req, res) => {
-  // TODO: Aquí iría la lógica de registro de usuario
-  
-  // si esta todo ok => luego de redirecciona al home
-  res.redirect('/expense')
-})
+auth.post('/signup', signup)
 
 export default auth

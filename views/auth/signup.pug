@@ -1,3 +1,5 @@
+include ../mixins/alert
+
 doctype html
 html
   head
@@ -8,25 +10,30 @@ html
     title Registrarse
 
   body
+    +alert(alert)
     div.container
       div.form-wrapper
         h1 Registrarse
         form(method='POST', action='/auth/signup')
           div.form-group
             label(for='nombre') Nombre
-            input(type='text', id='nombre', name='nombre', required)
+            input(type='text', id='nombre', name='nombre', required, value=formValues ? formValues.nombre : '')
+
+          div.form-group
+            label(for='apellido') Apellido
+            input(type='text', id='apellido', name='apellido', required, value= formValues ? formValues?.apellido : '')
           
           div.form-group
             label(for='email') Email
-            input(type='email', id='email', name='email', required)
+            input(type='email', id='email', name='email', required, value= formValues ? formValues?.email : '')
           
           div.form-group
             label(for='password') Contraseña
-            input(type='password', id='password', name='password', required)
+            input(type='password', id='password', name='password', required, value= formValues ? formValues?.password : '')
           
           div.form-group
             label(for='confirmPassword') Confirmar Contraseña
-            input(type='password', id='confirmPassword', name='confirmPassword', required)
+            input(type='password', id='confirmPassword', name='confirmPassword', required, value= formValues ? formValues?.confirmPassword : '')
           
           div.form-group.center
             button(type='submit') Registrarse

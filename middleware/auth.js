@@ -3,7 +3,7 @@ import { User } from "../models/User.js";
 export async function auth(req, res, next) {
   // TODO: pendiente para luego. lógica de autenticación
   req.user = {
-    id: 2
+    id: 1
   };
   const userId = Number(req.user?.id);
   if (!Number.isInteger(userId) || userId <= 0) {

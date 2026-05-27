@@ -1,7 +1,13 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "./config.js";
+import bcrypt from 'bcrypt';
 
-export class User extends Model {}
+export class User extends Model {
+  // Metodo para verificar contrasena
+  validatePassword(password){
+    return bcrypt.compare(password, this.password)
+  }
+}
 
 User.init(
   {
@@ -22,6 +28,9 @@ User.init(
       type: DataTypes.STRING, //255
       allowNull: false,
       unique: true,
+      validate: {
+        isEmail: 'Debe ser un email!'
+      }
     },
     phone: {
       type: DataTypes.STRING,
@@ -34,6 +43,9 @@ User.init(
     },
     avatar: {
       type: DataTypes.BLOB,
+    },
+    password: {
+      type: DataTypes.STRING,
     }
   },
   {
@@ -42,6 +54,15 @@ User.init(
     tableName: 'users', // nombre de la tabla
     createdAt: true, // cada vez que crea un usuario coloca la fecha de creacion
     deletedAt: true, // cada vez que se elimina un usuario coloca la fecha de eliminacion
+    hooks: {
+      beforeSave: async (usuario) => {
+        if(!usuario.password) return;
+        if(!usuario.changed('password')) return;
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(usuario.password, salt)
+        usuario.password = hashedPassword;
+      }
+    }
   },
 );
 
