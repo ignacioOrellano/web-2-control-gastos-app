@@ -1,9 +1,10 @@
 import 'dotenv/config';
 import express from 'express';
+import session from 'express-session';
 import expenseRouter from './routes/expense.js';
 import authRouter from './routes/auth.js';
 import tagRouter from './routes/tag.js';
-import { auth } from './middleware/auth.js';
+import { authMiddleware } from './middleware/auth.js';
 import { User } from './models/User.js';
 import { connectDatabase } from './models/index.js';
 
@@ -14,6 +15,17 @@ const app = express();
 
 // MIDDLEWARES
 app.use(express.static('public'));
+app.use(session({
+  secret: process.env.SESSION_KEY,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false, // produccion cambiar a true
+    maxAge: 24 * 60 * 60 * 1000, // 24h
+    httpOnly: true,
+    sameSite: 'lax', 
+  },
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next)=>{
@@ -32,8 +44,8 @@ app.get('/', (req, res) => {
 
 app.use('/auth', authRouter);
 
-app.use('/expense', auth, expenseRouter);
-app.use('/tag', auth, tagRouter);
+app.use('/expense', authMiddleware, expenseRouter);
+app.use('/tag', authMiddleware, tagRouter);
 
 
 // CONEXION A BD

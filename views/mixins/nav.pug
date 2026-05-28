@@ -9,9 +9,10 @@ mixin nav
   nav
     ul
       +item('/', 'Home', currentPath == '/')
-      +item('/expense', 'Gastos', currentPath.startsWith('/expense'))
-      +item('/tag', 'Categorías', currentPath.startsWith('/tag'))
       if currentUser
+        +item('/expense', 'Gastos', currentPath.startsWith('/expense'))
+        +item('/tag', 'Categorías', currentPath.startsWith('/tag'))
+        +item('/auth/logout', 'Cerrar sesion', false)
         li.nav-user
           div.nav-user-profile
             span #{currentUser.firstName} #{currentUser.lastName}

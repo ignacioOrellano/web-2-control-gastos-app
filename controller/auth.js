@@ -48,6 +48,10 @@ export async function login(req, res) {
       })
       return;
     }
+
+    req.session.user = {
+      id: user.id,
+    };
   } catch (error) {
     console.log('[!] Error en login: ', error);
     res.status(500).render('auth/login', {
@@ -118,4 +122,12 @@ export async function signup(req, res) {
 
   // si esta todo ok => luego de redirecciona al home
   res.redirect('/expense')
+}
+
+export async function logout(req, res) {
+  if(req.session){
+    await req.session.destroy();
+    res.redirect('/auth/login');
+    return;
+  }
 }
