@@ -12,7 +12,9 @@ mixin nav
       if currentUser
         +item('/expense', 'Gastos', currentPath.startsWith('/expense'))
         +item('/tag', 'Categorías', currentPath.startsWith('/tag'))
-        +item('/auth/logout', 'Cerrar sesion', false)
+        li.nav-user
+          form(action="/auth/logout", method="post")
+            button(type="submit") Salir
         li.nav-user
           div.nav-user-profile
             span #{currentUser.firstName} #{currentUser.lastName}
