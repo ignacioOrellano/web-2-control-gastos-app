@@ -1,8 +1,10 @@
 import 'dotenv/config';
 import { Sequelize } from 'sequelize';
+import pg from 'pg';
 
 const sequelize = new Sequelize({
   dialect: 'postgres',
+  dialectModule: pg,
   host: process.env.DB_HOST,
   username: process.env.DB_USER,
   database: process.env.DB_NAME,
