@@ -4,7 +4,7 @@ import pg from 'pg';
 
 const sslConn = process.env.DB_SSL == 'true' ? {
   ssl: {
-    require: process.env.DB_SSL,
+    require: true,
     rejectUnauthorized: false,
   }
 } : undefined;
