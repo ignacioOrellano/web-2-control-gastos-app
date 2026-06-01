@@ -21,19 +21,19 @@ html
 
           div.form-group
             label(for='apellido') Apellido
-            input(type='text', id='apellido', name='apellido', required, value= formValues ? formValues?.apellido : '')
+            input(type='text', id='apellido', name='apellido', required, value= formValues ? formValues.apellido : '')
           
           div.form-group
             label(for='email') Email
-            input(type='email', id='email', name='email', required, value= formValues ? formValues?.email : '')
+            input(type='email', id='email', name='email', required, value= formValues ? formValues.email : '')
           
           div.form-group
             label(for='password') Contraseña
-            input(type='password', id='password', name='password', required, value= formValues ? formValues?.password : '')
+            input(type='password', id='password', name='password', required, value= formValues ? formValues.password : '')
           
           div.form-group
             label(for='confirmPassword') Confirmar Contraseña
-            input(type='password', id='confirmPassword', name='confirmPassword', required, value= formValues ? formValues?.confirmPassword : '')
+            input(type='password', id='confirmPassword', name='confirmPassword', required, value= formValues ? formValues.confirmPassword : '')
           
           div.form-group.center
             button(type='submit') Registrarse
