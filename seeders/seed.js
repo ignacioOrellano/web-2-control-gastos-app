@@ -4,23 +4,30 @@ import { User } from '../models/User.js'
 import { Tag } from '../models/Tag.js'
 import { Expense } from '../models/Expense.js'
 
+const usersToCreate = [
+  {
+    firstName: "Jack",
+    lastName: "Sparrow",
+    password: 'js1234',
+    email: "jacksparrow@gmail.com",
+  },
+  {
+    firstName: "Capitan",
+    lastName: "America",
+    password: 'ca1234',
+    email: "capitanamerica@gmail.com",
+    phone: "+542665123123"
+  }
+];
+
 async function seed() {
   initializeAssociations();
   await sequelize.sync({ alter: true, force: true });
 
-  const users = await User.bulkCreate([
-    {
-      firstName: "Jack",
-      lastName: "Sparrow",
-      email: "jacksparrow@gmail.com",
-    },
-    {
-      firstName: "Capitan",
-      lastName: "America",
-      email: "capitanamerica@gmail.com",
-      phone: "+542665123123"
-    }
-  ])
+  const users = [];
+  for(const user of usersToCreate) {
+    users.push(await User.create(user));
+  }
 
   const tags = await Tag.bulkCreate([
     //Jack Sparrow
