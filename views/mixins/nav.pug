@@ -9,9 +9,9 @@ mixin nav
   nav
     ul
       +item('/', 'Home', currentPath == '/')
+      +item('/expense', 'Gastos', currentPath.startsWith('/expense'))
+      +item('/tag', 'Categorías', currentPath.startsWith('/tag'))
       if currentUser
-        +item('/expense', 'Gastos', currentPath.startsWith('/expense'))
-        +item('/tag', 'Categorías', currentPath.startsWith('/tag'))
         li.nav-user
           form(action="/auth/logout", method="post")
             button(type="submit") Salir
@@ -19,3 +19,5 @@ mixin nav
           div.nav-user-profile
             span #{currentUser.firstName} #{currentUser.lastName}
             img(src='/icons/user-svgrepo-com.svg', alt='Usuario', width='22', height='22')
+      else
+        +item('/auth/login', 'Iniciar sesion')

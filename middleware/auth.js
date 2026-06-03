@@ -19,6 +19,8 @@ export async function authMiddleware(req, res, next) {
       return;
     }
 
+    req.user = user;
+
     res.locals.currentUser = {
       id: user.id,
       firstName: user.firstName,

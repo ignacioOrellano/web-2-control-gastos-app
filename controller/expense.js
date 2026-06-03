@@ -71,25 +71,16 @@ async function getOwnedExpense(expenseId, userId) {
 }
 
 export async function getExpenses(req, res, options = {}) {
-  const userId = getAuthenticatedUserId(req);
-  if (!userId) {
+  const usuario = req.user;
+  if (!usuario) {
     renderAuthRequired(res);
     return;
   }
 
   try {
-    const usuario = await getCurrentUser(userId);
-    if (!usuario) {
-      res.status(404).render('expense/error', {
-        code: 404,
-        msg: 'Usuario no encontrado',
-      });
-      return;
-    }
-
     const expenses = await Expense.findAll({
       where: {
-        userId: userId,
+        userId: usuario.id,
       },
       include: [
         {
@@ -116,14 +107,13 @@ export async function getExpenses(req, res, options = {}) {
 }
 
 export async function getNewExpense(req, res) {
-  const userId = getAuthenticatedUserId(req);
-  if (!userId) {
+  const usuario = req.user;
+  if (!usuario) {
     renderAuthRequired(res);
     return;
   }
-
   try {
-    const categorias = await getUserTags(userId);
+    const categorias = await getUserTags(usuario.id);
     res.render('expense/nuevo', {
       categorias,
       values: {
@@ -143,8 +133,8 @@ export async function getNewExpense(req, res) {
 }
 
 export async function postNewExpense(req, res) {
-  const userId = getAuthenticatedUserId(req);
-  if (!userId) {
+  const usuario = req.user;
+  if (!usuario) {
     renderAuthRequired(res);
     return;
   }
@@ -161,7 +151,7 @@ export async function postNewExpense(req, res) {
   });
 
   try {
-    const categorias = await getUserTags(userId);
+    const categorias = await getUserTags(usuario.id);
 
     if (validacion.success === false) {
       res.status(400).render('expense/nuevo', {
@@ -232,8 +222,8 @@ export async function postNewExpense(req, res) {
 }
 
 export async function getEditExpense(req, res) {
-  const userId = getAuthenticatedUserId(req);
-  if (!userId) {
+  const usuario = req.user;
+  if (!usuario) {
     renderAuthRequired(res);
     return;
   }
@@ -249,8 +239,8 @@ export async function getEditExpense(req, res) {
 
   try {
     const [gasto, categorias] = await Promise.all([
-      getOwnedExpense(expenseId, userId),
-      getUserTags(userId),
+      getOwnedExpense(expenseId, usuario.id),
+      getUserTags(usuario.id),
     ]);
 
     if (!gasto) {
@@ -281,8 +271,8 @@ export async function getEditExpense(req, res) {
 }
 
 export async function postEditExpense(req, res) {
-  const userId = getAuthenticatedUserId(req);
-  if (!userId) {
+  const usuario = req.user;
+  if (!usuario) {
     renderAuthRequired(res);
     return;
   }
@@ -388,8 +378,8 @@ export async function postEditExpense(req, res) {
 }
 
 export async function postDeleteExpense(req, res) {
-  const userId = getAuthenticatedUserId(req);
-  if (!userId) {
+  const usuario = req.usuario;
+  if (!usuario) {
     renderAuthRequired(res);
     return;
   }
@@ -404,7 +394,7 @@ export async function postDeleteExpense(req, res) {
   }
 
   try {
-    const gasto = await getOwnedExpense(expenseId, userId);
+    const gasto = await getOwnedExpense(expenseId, usuario.id);
     if (!gasto) {
       res.status(404).render('expense/error', {
         code: 404,
